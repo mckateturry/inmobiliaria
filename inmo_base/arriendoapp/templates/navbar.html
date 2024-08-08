@@ -1,0 +1,128 @@
+{% load static %}
+
+
+<!--NAVBAR-->
+<nav class="navbar navbar-expand-lg bg-nav" data-bs-theme="white">
+  <!-- agregue bg-green  -->
+  <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'index' %}">
+      <img src="{% static 'assets/img/logosinfondo.png' %}" class="logoimg" alt="logochilestay"
+    /></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav d-flex mx-auto mb-2 mb-lg-0">
+        
+        
+        
+        
+        {% if user.is_authenticated%}
+        <li class="nav-item">
+          <a class="nav-link bg-light text-dark" href="{% url 'modoanfitrion' %}">Modo Anfitrión</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link bg-light text-dark" href="{% url 'modoviajero' %}">Modo viajero</a>
+        </li>
+        
+        {% endif %}
+        
+      </ul>
+
+      <ul class="navbar-nav d-flex ms-auto mb-2 mb-lg-0">
+        {% if not user.is_authenticated%}
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="{% url 'login' %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{% static 'assets/img/iconusuario.png'%}" class="iconnav" alt="iniciar sesión"
+        />
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'login' %}">Iniciar Sesión</a></li>
+            <li><a class="dropdown-item" href="{% url 'register' %}">Regístrate</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Pon tu espacio aquí</a></li>
+          </ul>
+        </li>
+
+        {% else %}  
+        <li class="nav-item">
+          <form method='post' action='{% url 'logout' %}'> {% csrf_token %}
+            <button type='submit'>
+              <img src="{% static 'assets/img/iconsalir.png'%}" class="iconnav" alt="cerrar sesión"
+            />
+          </button> 
+        </form>
+        </li>
+        
+
+
+        {% endif %} 
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin:index' %}">
+            <img src="{% static 'assets/img/iconlike.png'%}" class="iconnav" alt="..."
+          /></a>
+
+
+          {% if user.is_authenticated%}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{% url 'index' %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{% static 'assets/img/iconusuario.png'%}" class="iconnav" alt="iniciar sesión"
+          />
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'index' %}">cuenta</a></li>
+              <li><a class="dropdown-item" href="{% url 'index' %}">Viajes</a></li>
+              <li><hr class="dropdown-divider"></li>
+            </ul>
+          </li>
+
+          
+          {% endif %}
+        </li>
+        
+       
+      
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+{% comment %} <nav class="navbar navbar-expand-lg bg-body-tertiary px-5">
+  <div class="container-fluid">
+      <a class="navbar-logo" href="{% url 'index' %}"> 
+          <img class="navbar-logo-img" src="{% static 'assets/img/logosinfondo.png' %}" alt="logochilestay"/>
+      </a>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          
+          {% if user.is_authenticated %}
+          <!-- Botón de Logout visible solo para usuarios autenticados -->
+          <button class="btn btn btn-dark me-md-2" type="button">
+              <a class="text-white" href="{% url 'logout' %}">Log out</a>
+          </button>
+          {% else %}
+          <!-- Botón de Login visible solo para usuarios no autenticados -->
+          <button class="btn btn-warning" type="button">
+            <a class="text-white" href="{% url 'login' %}">Login</a>
+        </button>
+        
+          {% endif %}
+
+          <button class="btn btn-secondary" type="button" onclick="window.history.back();">
+            <span class="text-white">Volver</span>
+        </button>
+          
+      </div>
+  </div>
+</nav> {% endcomment %}

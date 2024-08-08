@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+ <!--NAVBAR-->
+ {% include "navbar.html" %}
+
+<div class="container mt-5 py-5">
+  <div class="row align-items-center">
+      <!-- Columna para la Imagen -->
+      <div class="col-md-6">
+        <div class="image-container">
+          <img src="{% static 'assets/img/dormitorio1.jpg' %}" alt="Imagen" class="img-fluid">
+        </div>
+      </div>
+
+      <!-- LOGIN -->
+  <!-- Columna para el Formulario -->
+  <div class="col-md-6">
+    <div class="form-login">
+        <h2 class="text-center">Bienvenido</h2>
+        {% if form.errors %}
+        <p class="text-center">Su nombre de usuario y contraseña no coinciden. Inténtalo de nuevo.</p>
+        {% endif %}
+    
+        {% if next %}
+        {% if user.is_authenticated %}
+          <p>Su cuenta no tiene acceso a esta página. Para continuar, inicie sesión con una cuenta que tenga acceso.</p>
+        {% else %}
+          <p>Por favor inicie sesión para ver esta página.</p>
+        {% endif %}
+        {% endif %}
+        
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="username" class="form-label"><strong>Usuario</strong></label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="admin">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="form-label"><strong>Contraseña</strong></label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Abc123#">
+            </div>
+            <p class="text-center">No tienes cuenta? Regístrate <a href="{% url 'register' %}" class="text-decoration-none"><strong>AQUÍ</strong></a></p>
+            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        </form>
+    </div>
+</div>
+
+
+
+  
+</div>
+  </div>
+
+ 
+
+ 
+
+{% endblock %}

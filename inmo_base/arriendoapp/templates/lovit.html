@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!--NAVBAR-->
+{% include "navbar.html" %}
+
+{% if user.is_authenticated %}
+<!--FRASE1-->
+<div class="py-5 px-5">
+  <h1 class="slideRight text-center">Nos encanta volver a verte, {{ user.username }}</h1>
+</div>
+
+ <!-- Formulario BUSCAR -->
+ <div class="px-5 text-center">
+    <form method="GET" action="{% url 'index' %}" class="mb-4">
+        <div class="row justify-content-md-center">
+            <div class="col-md-2 mb-3">
+                <label for="zona" class="form-label">Zona</label>
+                <select id="zona" name="zona" class="form-control form-control-sm">
+                    <option value="">Zona</option>
+                    <option value="norte">Norte</option>
+                    <option value="centro">Centro</option>
+                    <option value="sur">Sur</option>
+                    <option value="austral">Austral</option>
+                </select>
+            </div>
+            <div class="col-md-2 mb-3">
+                <label for="llegada" class="form-label">Llegada</label>
+                <input type="date" id="llegada" name="llegada" class="form-control form-control-sm" value="{% if request.GET.llegada %}{{ request.GET.llegada }}{% endif %}">
+            </div>
+            <div class="col-md-2 mb-3">
+                <label for="salida" class="form-label">Salida</label>
+                <input type="date" id="salida" name="salida" class="form-control form-control-sm" value="{% if request.GET.salida %}{{ request.GET.salida }}{% endif %}">
+            </div>
+            <div class="col-md-2 mb-3">
+                <label for="categoria" class="form-label">¿Cuántos?</label>
+                <div class="d-flex">
+                    <select id="categoria" name="categoria" class="form-control form-control-sm me-2">
+                        <option value="">Categoría</option>
+                        <option value="adultos">Adultos</option>
+                        <option value="ninos">Niños</option>
+                        <option value="mascotas">Mascotas</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2 mb-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+    
+    
+    
+    
+            
+            
+            <!-- Mostrar las imágenes filtradas -->
+            <div class="row">
+                {% for image in images %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <a href="{% url 'detalle_img' image.pk %}"> <!-- Enlace a la página de detalles -->
+                                <img src="{{ image.image_url }}" class="card-img-top" alt="Imagen">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ image.description }}</h5>
+                                <p class="card-text"><strong>Estilo:</strong> {{ image.get_style_display }}</p>
+                                <p class="card-text"><strong>Usuario:</strong> {{ image.user.username }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-center">No hay inmobiliarias para mostrar.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+
+
+
+
+
+{% comment %} <div class="container mt-5">
+ 
+    <!-- Formulario BUSCAR -->
+    <form method="GET" action="{% url 'index' %}" class="mb-4">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="user" class="form-label"></label>
+                <select id="user" name="user" class="form-control">
+                    <option value="">Usuario</option>
+                    {% for user in users %}
+                        <option value="{{ user.id }}" {% if request.GET.user == user.id|stringformat:"s" %}selected{% endif %}>{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="style" class="form-label"></label>
+                <select id="style" name="style" class="form-control">
+                    <option value="">Categoría</option>
+                    <option value="artistic" {% if request.GET.style == "artistic" %}selected{% endif %}>Artístico</option>
+                    <option value="landscape" {% if request.GET.style == "landscape" %}selected{% endif %}>Paisaje</option>
+                    <option value="portrait" {% if request.GET.style == "portrait" %}selected{% endif %}>Retrato</option>
+                </select>
+            </div>
+            <div class="col-md-4 mb-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </div>
+    </form>
+
+    
+    
+    <!-- Mostrar las imágenes filtradas -->
+    <div class="row">
+        {% for image in images %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <a href="{% url 'detalle_img' image.pk %}"> <!-- Enlace a la página de detalles -->
+                        <img src="{{ image.image_url }}" class="card-img-top" alt="Imagen">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ image.description }}</h5>
+                        <p class="card-text"><strong>Estilo:</strong> {{ image.get_style_display }}</p>
+                        <p class="card-text"><strong>Usuario:</strong> {{ image.user.username }}</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center">No hay immuebles para mostrar.</p>
+        {% endfor %}
+    </div>
+</div> {% endcomment %}
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="text-center">Registro de Imagen</h2>
+    <form method="POST" action="{% url 'register_img' %}">
+        {% csrf_token %}
+        
+        <!-- URL de la Imagen -->
+        <div class="mb-4">
+            <label for="{{ form.image_url.id_for_label }}" class="form-label"><strong>URL de la Imagen</strong></label>
+            {{ form.image_url }}
+            {% if form.image_url.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.image_url.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Descripción -->
+        <div class="mb-4">
+            <label for="{{ form.description.id_for_label }}" class="form-label"><strong>Descripción</strong></label>
+            {{ form.description }}
+            {% if form.description.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.description.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Estilo -->
+        <div class="mb-4">
+            <label for="{{ form.style.id_for_label }}" class="form-label"><strong>Estilo</strong></label>
+            {{ form.style }}
+            {% if form.style.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.style.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Subir Imagen</button>
+    </form>
+</div>
+
+{% endblock %}
